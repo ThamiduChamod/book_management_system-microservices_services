@@ -83,4 +83,21 @@ public class BookController {
     public ResponseEntity<Boolean> updateStock(@PathVariable Long id, @RequestParam Integer quantity) {
         return ResponseEntity.ok(bookService.updateStock(id, quantity));
     }
+
+    @PutMapping("/{id}/reduce-quantity")
+    public ResponseEntity<Void> reduceQuantity(
+            @PathVariable("id") Long id,
+            @RequestParam("quantity") int quantity) {
+
+        bookService.reduceQuantity(id, quantity);
+        return ResponseEntity.ok().build();
+    }
+    @PutMapping("/{id}/restore-quantity")
+    public ResponseEntity<Void> restoreQuantity(
+            @PathVariable("id") Long id,
+            @RequestParam("quantity") int quantity) {
+
+        bookService.restoreQuantity(id, quantity);
+        return ResponseEntity.ok().build();
+    }
 }

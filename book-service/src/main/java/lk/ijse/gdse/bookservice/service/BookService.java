@@ -18,4 +18,6 @@ public interface BookService {
     List<BookDTO> searchBooksByTitle(String title);
     List<BookDTO> getBooksByCategory(String category);
     boolean updateStock(Long id, Integer qtyToDeduct); // For Order Service integration
+    void reduceQuantity(Long id, int quantity);
+    void restoreQuantity(Long id, int quantity);
 }

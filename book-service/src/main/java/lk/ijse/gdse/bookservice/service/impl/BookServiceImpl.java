@@ -7,6 +7,7 @@ import lk.ijse.gdse.bookservice.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -140,6 +141,29 @@ public class BookServiceImpl implements BookService {
         book.setQuantity(book.getQuantity() - qtyToDeduct);
         bookRepository.save(book);
         return true;
+    }
+
+    @Override
+    @Transactional
+    public void reduceQuantity(Long id, int quantity) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Book not found with ID: " + id));
+
+        if (book.getQuantity() < quantity) {
+            throw new RuntimeException("Insufficient stock available for book ID: " + id);
+        }
+
+        book.setQuantity(book.getQuantity() - quantity);
+        bookRepository.save(book);
+    }
+    @Override
+    @Transactional
+    public void restoreQuantity(Long id, int quantity) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Book not found with ID: " + id));
+
+        book.setQuantity(book.getQuantity() + quantity);
+        bookRepository.save(book);
     }
 
     // Mapper Methods
