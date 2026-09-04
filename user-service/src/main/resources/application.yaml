@@ -6,7 +6,7 @@ spring:
     name: USER-SERVICE
 
   config:
-    import: "configserver:http://config.platform:8088"
+    import: "configserver:http://config.platform:8088/borrow-service/defult"
 #  data:
 #    mongodb:
 #      uri: mongodb://localhost:27017/eca_user_db
